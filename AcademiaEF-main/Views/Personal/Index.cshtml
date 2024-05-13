@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Academia.Models.Personal>
+
+@{
+    ViewData["Title"] = "Personais";
+}
+
+
+
+@section Scripts {
+    <script>
+        
+        document.getElementById('selectPersonais').addEventListener('change', function () {
+            
+            var personalId = this.value;
+
+            window.location.href = '@Url.Action("Details", "Personal")' + '?id=' + personalId;
+        });
+    </script>
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<h1>Personais</h1>
+
+<div>
+    <h4>Pesquisar Personais:</h4>
+    <select id="selectPersonais" class="form-control col-9" asp-items="ViewBag.PersonalId">
+        <option style="display:none;" disabled selected>Selecione um personal...</option>
+    </select>
+</div>
+
+<a asp-action="Create" class=" btn btn-success p-1 m-2 rounded">Adicionar novo personal</a>
+
+
+
+@foreach (var personal in Model)
+{
+    <div class="card card-header m-1 p-1">
+        <div class="bg-tranparent p-1">
+            <h4>
+                @personal.Nome
+
+                <span>
+                    <small>
+                        <a asp-action="Delete" class="btn btn-danger m-2 " asp-route-id="@personal.PersonalId" style="float:right">
+                            <small>Excluir</small>
+                        </a>
+
+                        <a asp-action="Edit" class="btn btn-warning m-2" asp-route-id="@personal.PersonalId" style="float:right">
+                            <small>Editar</small>
+                        </a>
+
+                        <a asp-action="Details" class="btn btn-info m-2" asp-route-id="@personal.PersonalId" style="float:right">
+                            <small>Ver mais</small>
+                        </a>
+                    </small>
+                </span>
+            </h4>
+        </div>
+
+        <div class="card-text p-1">
+            <b>Especialidade </b> @personal.Especialidade <br />
+        </div>
+
+        <hr class="m-3"/>
+        <h6><b>Alunos do(a) @personal.Nome</b></h6>
+        @foreach(var aluno in personal.Alunos)
+        {
+            <div class="card-text p-1">
+                @aluno.Nome <br />
+            </div>
+        }
+
+    </div>
+}
+

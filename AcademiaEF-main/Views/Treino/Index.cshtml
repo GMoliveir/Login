@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Academia.Models.Treino>
+
+@{
+    ViewData["Title"] = "Treinos";
+}
+
+<h1>Treinos</h1>
+
+<p>
+    <a asp-action="Create">Adicionar novo treino</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Personal
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hora)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Aluno)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aluno.Personal.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Data)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hora)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aluno.Nome)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.TreinoId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.TreinoId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.TreinoId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
